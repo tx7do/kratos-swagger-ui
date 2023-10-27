@@ -3,14 +3,12 @@ package internal
 import (
 	"sort"
 	"strings"
-
-	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 )
 
 // IndexTpl creates page template.
 //
 //nolint:funlen // The template is long.
-func IndexTpl(assetsBase, faviconBase string, cfg swaggerUI.Config) string {
+func IndexTpl(assetsBase, faviconBase string, cfg *Config) string {
 	settings := map[string]string{
 		"url":         "url",
 		"dom_id":      "'#swagger-ui'",

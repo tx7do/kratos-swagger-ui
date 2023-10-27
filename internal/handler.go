@@ -5,13 +5,11 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
-
-	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 )
 
 // Handler handles swagger UI request.
 type Handler struct {
-	swaggerUI.Config
+	*Config
 
 	ConfigJson template.JS
 
@@ -20,7 +18,7 @@ type Handler struct {
 }
 
 // NewHandlerWithConfig returns a HTTP handler for swagger UI.
-func NewHandlerWithConfig(config swaggerUI.Config, assetsBase, faviconBase string, staticServer http.Handler) *Handler {
+func NewHandlerWithConfig(config *Config, assetsBase, faviconBase string, staticServer http.Handler) *Handler {
 	config.BasePath = strings.TrimSuffix(config.BasePath, "/") + "/"
 
 	h := &Handler{
