@@ -77,8 +77,8 @@ func registerOpenApiFileRouter[T httpServerInterface](srv T, swaggerHandler *Han
 	err := _openJsonFileHandler.LoadFile(swaggerHandler.LocalOpenApiFile)
 	if err == nil {
 		pattern := strings.TrimRight(swaggerHandler.BasePath, "/") + "/openapi" + path.Ext(swaggerHandler.LocalOpenApiFile)
-		srv.Handle(pattern, _openJsonFileHandler)
 		swaggerHandler.SwaggerJSON = pattern
+		srv.Handle(pattern, _openJsonFileHandler)
 	} else {
 		fmt.Println("load openapi file failed: ", err)
 	}
