@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -75,7 +76,7 @@ var _openJsonFileHandler = &openJsonFileHandler{}
 func registerOpenApiFileRouter[T httpServerInterface](srv T, swaggerHandler *Handler) {
 	err := _openJsonFileHandler.LoadFile(swaggerHandler.LocalOpenApiFile)
 	if err == nil {
-		pattern := strings.TrimRight(swaggerHandler.BasePath, "/") + "/openapi.json"
+		pattern := strings.TrimRight(swaggerHandler.BasePath, "/") + "/openapi" + path.Ext(swaggerHandler.LocalOpenApiFile)
 		srv.Handle(pattern, _openJsonFileHandler)
 		swaggerHandler.SwaggerJSON = pattern
 	} else {
