@@ -11,11 +11,11 @@ import (
 )
 
 type openJsonFileHandler struct {
-	content []byte
+	Content []byte
 }
 
 func (h *openJsonFileHandler) ServeHTTP(writer http.ResponseWriter, _ *http.Request) {
-	_, _ = writer.Write(h.content)
+	_, _ = writer.Write(h.Content)
 }
 
 func (h *openJsonFileHandler) loadOpenApiFile(filePath string) ([]byte, error) {
@@ -35,7 +35,7 @@ func (h *openJsonFileHandler) LoadFile(filePath string) error {
 		return err
 	}
 
-	h.content = content
+	h.Content = content
 	return nil
 }
 
@@ -59,6 +59,8 @@ func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts
 
 	if opts.LocalOpenApiFile != "" {
 		registerOpenApiFileRouter(srv, opts)
+	} else if len(opts.OpenApiData) != 0 {
+		registerOpenApiDataRouter(srv, opts)
 	}
 
 	swaggerHandler := newHandlerWithConfig(opts)
@@ -77,4 +79,11 @@ func registerOpenApiFileRouter[T httpServerInterface](srv T, cfg *swagger.Config
 	} else {
 		fmt.Println("load openapi file failed: ", err)
 	}
+}
+
+func registerOpenApiDataRouter[T httpServerInterface](srv T, cfg *swagger.Config) {
+	_openJsonFileHandler.Content = cfg.OpenApiData
+	pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi." + cfg.OpenApiDataType
+	cfg.SwaggerJSON = pattern
+	srv.Handle(pattern, _openJsonFileHandler)
 }

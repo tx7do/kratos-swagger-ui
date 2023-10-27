@@ -16,7 +16,9 @@ type Config struct {
 	// See https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/ for available options.
 	SettingsUI map[string]string `json:"-"`
 
-	LocalOpenApiFile string
+	LocalOpenApiFile string `json:"-"`
+	OpenApiData      []byte `json:"-"`
+	OpenApiDataType  string `json:"-"`
 }
 
 func NewConfig() *Config {

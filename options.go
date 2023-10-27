@@ -69,3 +69,10 @@ func WithLocalOpenApiFile(filePath string) HandlerOption {
 		opt.LocalOpenApiFile = filePath
 	}
 }
+
+func WithOpenApiData(data []byte, ext string) HandlerOption {
+	return func(opt *swagger.Config) {
+		opt.OpenApiData = data
+		opt.OpenApiDataType = ext
+	}
+}
