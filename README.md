@@ -8,9 +8,74 @@ at the first, you need install this lib:
 go get -u github.com/tx7do/kratos-swagger-ui
 ```
 
-then
+direct use:
 
 ```go
+package main
+
+import (
+	"net/http"
+
+	swaggerUI "github.com/tx7do/kratos-swagger-ui"
+)
+
+func main() {
+	swaggerHandler := swaggerUI.New(
+		"Petstore",
+		"https://petstore3.swagger.io/api/v3/openapi.json",
+		"/docs/",
+	)
+	
+	http.Handle("/docs/", swaggerHandler)
+
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		_, _ = writer.Write([]byte("Hello World!"))
+	})
+
+	println("docs at http://localhost:8080/docs/")
+
+	_ = http.ListenAndServe("localhost:8080", http.DefaultServeMux)
+}
+```
+
+use it in kratos:
+
+```go
+import (
+    "net/http"
+    
+    swaggerUI "github.com/tx7do/kratos-swagger-ui"
+    rest "github.com/go-kratos/kratos/v2/transport/http"
+)
+
+func NewRESTServer() *rest.Server {
+    swaggerHandler := swaggerUI.New(
+        "Petstore",
+        "https://petstore3.swagger.io/api/v3/openapi.json",
+        "/docs/",
+    )
+    srv.HandlePrefix("/docs/", swaggerHandler)
+}
+```
+
+or
+
+```go
+import (
+    "net/http"
+    
+    swaggerUI "github.com/tx7do/kratos-swagger-ui"
+    rest "github.com/go-kratos/kratos/v2/transport/http"
+)
+
+func NewRESTServer() *rest.Server {
+    swaggerUI.RegisterSwaggerUIServer(
+        srv,
+        "Petstore",
+        "https://petstore3.swagger.io/api/v3/openapi.json",
+        "/docs/",
+    )
+}
 ```
 
 ## References

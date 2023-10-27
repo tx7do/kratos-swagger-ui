@@ -16,3 +16,9 @@ type Config struct {
 	// See https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/ for available options.
 	SettingsUI map[string]string `json:"-"`
 }
+
+func NewConfig() *Config {
+	return &Config{
+		BasePath: "/docs/",
+	}
+}
