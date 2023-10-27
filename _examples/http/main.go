@@ -14,7 +14,7 @@ func main() {
 
 	swaggerHandler := swaggerUI.NewWithOption(
 		swaggerUI.WithTitle("Petstore"),
-		swaggerUI.WithSwaggerJSON("https://petstore3.swagger.io/api/v3/openapi.json"),
+		swaggerUI.WithRemoteFile("https://petstore3.swagger.io/api/v3/openapi.json"),
 		swaggerUI.WithBasePath("/docs/"),
 	)
 

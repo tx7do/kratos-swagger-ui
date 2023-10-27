@@ -13,13 +13,6 @@ func WithTitle(title string) HandlerOption {
 	}
 }
 
-// WithSwaggerJSON URL to openapi.json/swagger.json document specification.
-func WithSwaggerJSON(filePath string) HandlerOption {
-	return func(opt *swagger.Config) {
-		opt.SwaggerJSON = filePath
-	}
-}
-
 // WithBasePath Base URL to docs.
 func WithBasePath(path string) HandlerOption {
 	return func(opt *swagger.Config) {
@@ -64,15 +57,22 @@ func WithSettingsUI(settings map[string]string) HandlerOption {
 	}
 }
 
-func WithLocalOpenApiFile(filePath string) HandlerOption {
+func WithLocalFile(filePath string) HandlerOption {
 	return func(opt *swagger.Config) {
 		opt.LocalOpenApiFile = filePath
 	}
 }
 
-func WithOpenApiData(data []byte, ext string) HandlerOption {
+func WithMemoryData(data []byte, ext string) HandlerOption {
 	return func(opt *swagger.Config) {
 		opt.OpenApiData = data
 		opt.OpenApiDataType = ext
+	}
+}
+
+// WithRemoteFile URL to openapi.json/swagger.json document specification.
+func WithRemoteFile(filePath string) HandlerOption {
+	return func(opt *swagger.Config) {
+		opt.SwaggerJSON = filePath
 	}
 }
