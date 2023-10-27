@@ -1,6 +1,8 @@
 package swaggerUI
 
-import "github.com/tx7do/kratos-swagger-ui/internal/swagger"
+import (
+	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
+)
 
 type HandlerOption func(opt *swagger.Config)
 
