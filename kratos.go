@@ -1,6 +1,7 @@
 package swaggerUI
 
 import (
+	"fmt"
 	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
 	"io"
 	"net/http"
@@ -39,6 +40,8 @@ func (h *openJsonFileHandler) LoadFile(filePath string) error {
 
 type httpServerInterface interface {
 	HandlePrefix(prefix string, h http.Handler)
+	Handle(path string, h http.Handler)
+	HandleFunc(path string, h http.HandlerFunc)
 }
 
 func RegisterSwaggerUIServer[T httpServerInterface](srv T, title, swaggerJSONPath string, basePath string) {
@@ -67,12 +70,15 @@ func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts
 	srv.HandlePrefix(swaggerHandler.BasePath, swaggerHandler)
 }
 
+var _openJsonFileHandler = &openJsonFileHandler{}
+
 func registerOpenApiFileRouter[T httpServerInterface](srv T, swaggerHandler *Handler) {
-	_openJsonFileHandler := openJsonFileHandler{}
 	err := _openJsonFileHandler.LoadFile(swaggerHandler.LocalOpenApiFile)
 	if err == nil {
 		pattern := strings.TrimRight(swaggerHandler.BasePath, "/") + "/openapi.json"
-		srv.HandlePrefix(pattern, &_openJsonFileHandler)
+		srv.HandlePrefix(pattern, _openJsonFileHandler)
 		swaggerHandler.SwaggerJSON = pattern
+	} else {
+		fmt.Println("load openapi file failed: ", err)
 	}
 }
