@@ -15,6 +15,8 @@ type Config struct {
 	// Overrides default values.
 	// See https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/ for available options.
 	SettingsUI map[string]string `json:"-"`
+
+	LocalOpenApiFile string
 }
 
 func NewConfig() *Config {

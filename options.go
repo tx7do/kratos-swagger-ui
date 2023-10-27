@@ -61,3 +61,9 @@ func WithSettingsUI(settings map[string]string) HandlerOption {
 		opt.SettingsUI = settings
 	}
 }
+
+func WithLocalOpenApiFile(filePath string) HandlerOption {
+	return func(opt *swagger.Config) {
+		opt.LocalOpenApiFile = filePath
+	}
+}

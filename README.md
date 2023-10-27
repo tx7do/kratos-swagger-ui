@@ -25,7 +25,7 @@ func main() {
 		"https://petstore3.swagger.io/api/v3/openapi.json",
 		"/docs/",
 	)
-	
+
 	http.Handle("/docs/", swaggerHandler)
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
@@ -41,42 +41,60 @@ func main() {
 use it in kratos:
 
 ```go
+package server
+
 import (
-    "net/http"
-    
-    swaggerUI "github.com/tx7do/kratos-swagger-ui"
-    rest "github.com/go-kratos/kratos/v2/transport/http"
+	rest "github.com/go-kratos/kratos/v2/transport/http"
+	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 )
 
 func NewRESTServer() *rest.Server {
-    swaggerHandler := swaggerUI.New(
-        "Petstore",
-        "https://petstore3.swagger.io/api/v3/openapi.json",
-        "/docs/",
-    )
-    srv.HandlePrefix("/docs/", swaggerHandler)
+	srv := CreateRestServer()
+
+	swaggerHandler := swaggerUI.New(
+		"Petstore",
+		"https://petstore3.swagger.io/api/v3/openapi.json",
+		"/docs/",
+	)
+	srv.HandlePrefix("/docs/", swaggerHandler)
 }
+
 ```
 
 or
 
 ```go
+package server
+
 import (
-    "net/http"
-    
-    swaggerUI "github.com/tx7do/kratos-swagger-ui"
-    rest "github.com/go-kratos/kratos/v2/transport/http"
+	rest "github.com/go-kratos/kratos/v2/transport/http"
+	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 )
 
 func NewRESTServer() *rest.Server {
-    swaggerUI.RegisterSwaggerUIServer(
-        srv,
-        "Petstore",
-        "https://petstore3.swagger.io/api/v3/openapi.json",
-        "/docs/",
-    )
+	srv := CreateRestServer()
+	
+	swaggerUI.RegisterSwaggerUIServer(
+		srv,
+		"Petstore",
+		"https://petstore3.swagger.io/api/v3/openapi.json",
+		"/docs/",
+	)
 }
+
 ```
+
+## Test Data
+
+### OpenAPI v2
+
+- Petstore JSON: <https://petstore.swagger.io/v2/swagger.json>
+- Petstore YAML: <https://petstore.swagger.io/v2/swagger.yaml>
+
+### OpenAPI v3
+
+- Petstore JSON: <https://petstore3.swagger.io/api/v3/openapi.json>
+- Petstore YAML: <https://petstore3.swagger.io/api/v3/openapi.yaml>
 
 ## References
 

@@ -38,24 +38,3 @@ func newHandler(title, swaggerJSONPath string, basePath string) *Handler {
 		BasePath:    basePath,
 	})
 }
-
-type httpServerInterface interface {
-	HandlePrefix(prefix string, h http.Handler)
-}
-
-func RegisterSwaggerUIServer[T httpServerInterface](srv T, title, swaggerJSONPath string, basePath string) {
-	swaggerHandler := newHandler(title, swaggerJSONPath, basePath)
-	srv.HandlePrefix(swaggerHandler.BasePath, swaggerHandler)
-}
-
-func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts ...HandlerOption) {
-	opts := swagger.NewConfig()
-
-	for _, o := range handlerOpts {
-		o(opts)
-	}
-
-	swaggerHandler := newHandlerWithConfig(opts)
-
-	srv.HandlePrefix(swaggerHandler.BasePath, swaggerHandler)
-}
