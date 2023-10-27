@@ -3,11 +3,11 @@ package swaggerUI
 import (
 	"net/http"
 
-	"github.com/tx7do/kratos-swagger-ui/internal"
+	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
 )
 
 // Handler handles swagger UI request.
-type Handler = internal.Handler
+type Handler = swagger.Handler
 
 // New creates HTTP handler for Swagger UI.
 func New(title, swaggerJSONPath string, basePath string) http.Handler {
@@ -16,7 +16,7 @@ func New(title, swaggerJSONPath string, basePath string) http.Handler {
 
 // NewWithOption creates configurable handler constructor.
 func NewWithOption(handlerOpts ...HandlerOption) http.Handler {
-	opts := internal.NewConfig()
+	opts := swagger.NewConfig()
 
 	for _, o := range handlerOpts {
 		o(opts)
@@ -26,13 +26,13 @@ func NewWithOption(handlerOpts ...HandlerOption) http.Handler {
 }
 
 // newHandlerWithConfig creates HTTP handler for Swagger UI.
-func newHandlerWithConfig(config *internal.Config) *Handler {
-	return internal.NewHandlerWithConfig(config, assetsBase, faviconBase, staticServer)
+func newHandlerWithConfig(config *swagger.Config) *Handler {
+	return swagger.NewHandlerWithConfig(config, assetsBase, faviconBase, staticServer)
 }
 
 // NewHandler creates HTTP handler for Swagger UI.
 func newHandler(title, swaggerJSONPath string, basePath string) *Handler {
-	return newHandlerWithConfig(&internal.Config{
+	return newHandlerWithConfig(&swagger.Config{
 		Title:       title,
 		SwaggerJSON: swaggerJSONPath,
 		BasePath:    basePath,
@@ -49,7 +49,7 @@ func RegisterSwaggerUIServer[T httpServerInterface](srv T, title, swaggerJSONPat
 }
 
 func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts ...HandlerOption) {
-	opts := internal.NewConfig()
+	opts := swagger.NewConfig()
 
 	for _, o := range handlerOpts {
 		o(opts)

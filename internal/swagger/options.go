@@ -1,4 +1,4 @@
-package internal
+package swagger
 
 // Config is used for Swagger UI handler configuration.
 type Config struct {

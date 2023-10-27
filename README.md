@@ -85,3 +85,4 @@ func NewRESTServer() *rest.Server {
 - [swagger-ui - github](https://github.com/swagger-api/swagger-ui)
 - [Swagger Open API Specification 2.0 and 3.0 in Go](https://kecci.medium.com/swagger-open-api-specification-2-0-and-3-0-in-go-c1f05b51a595)
 - [Embedded Swagger UI for Go](https://github.com/swaggest/swgui)
+- [Tutorial: Developing a RESTful API with Go, JSON Schema validation and OpenAPI docs](https://dev.to/vearutop/tutorial-developing-a-restful-api-with-go-json-schema-validation-and-openapi-docs-2490)

@@ -1,4 +1,4 @@
-package internal
+package swagger
 
 import (
 	"encoding/json"
