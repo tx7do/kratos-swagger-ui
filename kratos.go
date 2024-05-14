@@ -68,9 +68,10 @@ func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts
 	srv.HandlePrefix(swaggerHandler.BasePath, swaggerHandler)
 }
 
-var _openJsonFileHandler = &openJsonFileHandler{}
+// var _openJsonFileHandler = &openJsonFileHandler{}
 
 func registerOpenApiLocalFileRouter[T httpServerInterface](srv T, cfg *swagger.Config) {
+	var _openJsonFileHandler = &openJsonFileHandler{}
 	err := _openJsonFileHandler.LoadFile(cfg.LocalOpenApiFile)
 	if err == nil {
 		pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi" + path.Ext(cfg.LocalOpenApiFile)
@@ -82,6 +83,7 @@ func registerOpenApiLocalFileRouter[T httpServerInterface](srv T, cfg *swagger.C
 }
 
 func registerOpenApiMemoryDataRouter[T httpServerInterface](srv T, cfg *swagger.Config) {
+	var _openJsonFileHandler = &openJsonFileHandler{}
 	_openJsonFileHandler.Content = cfg.OpenApiData
 	pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi." + cfg.OpenApiDataType
 	cfg.SwaggerJSON = pattern
