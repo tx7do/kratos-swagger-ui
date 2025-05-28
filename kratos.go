@@ -2,12 +2,13 @@ package swaggerUI
 
 import (
 	"fmt"
-	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
 	"io"
 	"net/http"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
 )
 
 type openJsonFileHandler struct {
@@ -75,7 +76,7 @@ func registerOpenApiLocalFileRouter[T httpServerInterface](srv T, cfg *swagger.C
 	err := _openJsonFileHandler.LoadFile(cfg.LocalOpenApiFile)
 	if err == nil {
 		pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi" + path.Ext(cfg.LocalOpenApiFile)
-		cfg.SwaggerJSON = pattern
+		cfg.SwaggerJsonUrl = pattern
 		srv.Handle(pattern, _openJsonFileHandler)
 	} else {
 		fmt.Println("load openapi file failed: ", err)
@@ -86,7 +87,7 @@ func registerOpenApiMemoryDataRouter[T httpServerInterface](srv T, cfg *swagger.
 	var _openJsonFileHandler = &openJsonFileHandler{}
 	_openJsonFileHandler.Content = cfg.OpenApiData
 	pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi." + cfg.OpenApiDataType
-	cfg.SwaggerJSON = pattern
+	cfg.SwaggerJsonUrl = pattern
 	srv.Handle(pattern, _openJsonFileHandler)
 	cfg.OpenApiData = nil
 }

@@ -2,9 +2,9 @@ package swagger
 
 // Config is used for Swagger UI handler configuration.
 type Config struct {
-	Title       string `json:"title"`          // Title of index file.
-	SwaggerJSON string `json:"swaggerJsonUrl"` // URL to openapi.json/swagger.json document specification.
-	BasePath    string `json:"basePath"`       // Base URL to docs.
+	Title          string `json:"title"`          // Title of an index file.
+	SwaggerJsonUrl string `json:"swaggerJsonUrl"` // URL to openapi.json/swagger.json document specification.
+	BasePath       string `json:"basePath"`       // Base URL to docs.
 
 	ShowTopBar         bool              `json:"showTopBar"`         // Show navigation top bar, hidden by default.
 	HideCurl           bool              `json:"hideCurl"`           // Hide curl code snippet.
@@ -17,8 +17,9 @@ type Config struct {
 	SettingsUI map[string]string `json:"-"`
 
 	LocalOpenApiFile string `json:"-"`
-	OpenApiData      []byte `json:"-"`
-	OpenApiDataType  string `json:"-"`
+
+	OpenApiData     []byte `json:"-"`
+	OpenApiDataType string `json:"-"`
 }
 
 func NewConfig() *Config {

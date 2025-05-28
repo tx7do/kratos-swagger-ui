@@ -8,13 +8,13 @@ import (
 func main() {
 	//swaggerHandler := swaggerUI.New(
 	//	"Petstore",
-	//	"https://petstore3.swagger.io/api/v3/openapi.json",
+	//	"https://petstore3.swagger.io/api/v3/openapi.yaml",
 	//	"/docs/",
 	//)
 
 	swaggerHandler := swaggerUI.NewWithOption(
 		swaggerUI.WithTitle("Petstore"),
-		swaggerUI.WithRemoteFile("https://petstore3.swagger.io/api/v3/openapi.json"),
+		swaggerUI.WithRemoteFileURL("https://petstore3.swagger.io/api/v3/openapi.yaml"),
 		swaggerUI.WithBasePath("/docs/"),
 	)
 

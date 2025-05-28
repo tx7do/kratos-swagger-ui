@@ -6,7 +6,7 @@ import (
 
 type HandlerOption func(opt *swagger.Config)
 
-// WithTitle Title of index file.
+// WithTitle Title of an index file.
 func WithTitle(title string) HandlerOption {
 	return func(opt *swagger.Config) {
 		opt.Title = title
@@ -34,7 +34,7 @@ func WithHideCurl(hide bool) HandlerOption {
 	}
 }
 
-// WithJsonEditor Enable visual json editor support (experimental, can fail with complex schemas).
+// WithJsonEditor Enable visual JSON editor support (experimental can fail with complex schemas).
 func WithJsonEditor(enable bool) HandlerOption {
 	return func(opt *swagger.Config) {
 		opt.JsonEditor = enable
@@ -63,16 +63,16 @@ func WithLocalFile(filePath string) HandlerOption {
 	}
 }
 
-func WithMemoryData(data []byte, ext string) HandlerOption {
+func WithMemoryData(content []byte, ext string) HandlerOption {
 	return func(opt *swagger.Config) {
-		opt.OpenApiData = data
+		opt.OpenApiData = content
 		opt.OpenApiDataType = ext
 	}
 }
 
-// WithRemoteFile URL to openapi.json/swagger.json document specification.
-func WithRemoteFile(filePath string) HandlerOption {
+// WithRemoteFileURL URL to openapi.json/swagger.json document specification.
+func WithRemoteFileURL(url string) HandlerOption {
 	return func(opt *swagger.Config) {
-		opt.SwaggerJSON = filePath
+		opt.SwaggerJsonUrl = url
 	}
 }

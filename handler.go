@@ -33,8 +33,8 @@ func newHandlerWithConfig(config *swagger.Config) *Handler {
 // NewHandler creates HTTP handler for Swagger UI.
 func newHandler(title, swaggerJSONPath string, basePath string) *Handler {
 	return newHandlerWithConfig(&swagger.Config{
-		Title:       title,
-		SwaggerJSON: swaggerJSONPath,
-		BasePath:    basePath,
+		Title:          title,
+		SwaggerJsonUrl: swaggerJSONPath,
+		BasePath:       basePath,
 	})
 }
