@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.24.3
 
 require (
-	github.com/swaggest/swgui v1.8.4
+	github.com/swaggest/swgui v1.8.5
 	github.com/vearutop/statigz v1.5.0
 )
 
