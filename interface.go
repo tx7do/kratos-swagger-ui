@@ -2,43 +2,12 @@ package swaggerUI
 
 import (
 	"fmt"
-	"io"
 	"net/http"
-	"os"
 	"path"
 	"strings"
 
 	"github.com/tx7do/kratos-swagger-ui/internal/swagger"
 )
-
-type openJsonFileHandler struct {
-	Content []byte
-}
-
-func (h *openJsonFileHandler) ServeHTTP(writer http.ResponseWriter, _ *http.Request) {
-	_, _ = writer.Write(h.Content)
-}
-
-func (h *openJsonFileHandler) loadOpenApiFile(filePath string) ([]byte, error) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	content, err := io.ReadAll(file)
-	return content, err
-}
-
-func (h *openJsonFileHandler) LoadFile(filePath string) error {
-	content, err := h.loadOpenApiFile(filePath)
-	if err != nil {
-		return err
-	}
-
-	h.Content = content
-	return nil
-}
 
 type httpServerInterface interface {
 	HandlePrefix(prefix string, h http.Handler)
@@ -69,10 +38,10 @@ func RegisterSwaggerUIServerWithOption[T httpServerInterface](srv T, handlerOpts
 	srv.HandlePrefix(swaggerHandler.BasePath, swaggerHandler)
 }
 
-// var _openJsonFileHandler = &openJsonFileHandler{}
+// var _openJsonFileHandler = &openApiFileHandler{}
 
 func registerOpenApiLocalFileRouter[T httpServerInterface](srv T, cfg *swagger.Config) {
-	var _openJsonFileHandler = &openJsonFileHandler{}
+	var _openJsonFileHandler = &openApiFileHandler{}
 	err := _openJsonFileHandler.LoadFile(cfg.LocalOpenApiFile)
 	if err == nil {
 		pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi" + path.Ext(cfg.LocalOpenApiFile)
@@ -84,7 +53,7 @@ func registerOpenApiLocalFileRouter[T httpServerInterface](srv T, cfg *swagger.C
 }
 
 func registerOpenApiMemoryDataRouter[T httpServerInterface](srv T, cfg *swagger.Config) {
-	var _openJsonFileHandler = &openJsonFileHandler{}
+	var _openJsonFileHandler = &openApiFileHandler{}
 	_openJsonFileHandler.Content = cfg.OpenApiData
 	pattern := strings.TrimRight(cfg.BasePath, "/") + "/openapi." + cfg.OpenApiDataType
 	cfg.SwaggerJsonUrl = pattern
